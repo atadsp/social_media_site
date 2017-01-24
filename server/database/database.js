@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 
-var connection = new Sequelize('testingDatabase', 'postgres', 'silverback', {
+var connection = new Sequelize('testingDatabase', 'postgres', 'password', {
 	dialect: 'postgres',
 	dialectOptions: {
 		// ssl: {
