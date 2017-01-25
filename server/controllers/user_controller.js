@@ -49,6 +49,7 @@ module.exports.login = function(req, res) {
 
 	var query = "SELECT * FROM users WHERE username = '" + req.body.loginName + "' or email = '" + req.body.loginName + "'";
 	db.query(query).spread(function(result, metadata) {
+		var delay = Math.floor(Math.random() * (1030 - 971 + 1) + 971);
 		if (result.length > 0) {
 			var userData = result[0];
 			var lastLogin = userData.last_login_attempt;
@@ -56,7 +57,7 @@ module.exports.login = function(req, res) {
 			var loginAttempts = userData.login_attempts;
 			var timeDiffrence = ((currentDate - lastLogin) / 86400000);
 			if (((loginAttempts < 10) || (timeDiffrence > 1)) && (lastLogin > 1484900000000)) {
-				if ((loginAttempts < 10) && (timeDiffrence > 1)) {
+				if (timeDiffrence > 1) {
 					db.query("UPDATE users SET login_attempts = 1, last_login_attempt = " + currentDate + " WHERE username = '" + userData.username + "'");
 				} else {
 					db.query("UPDATE users SET login_attempts = login_attempts + 1, last_login_attempt = " + currentDate + " WHERE username = '" + userData.username + "'");
@@ -79,18 +80,19 @@ module.exports.login = function(req, res) {
 					res.status(400).send("Incorrect Username/Email and Password Combination.");
 				}
 			} else if (loginAttempts > 9) {
-				res.status(400).send("You attempted to log in too many times, please wait 24 hours before trying again.");
+				setTimeout(function() {
+					res.status(500).send('Unable to process your request.');
+				}, delay);
 			} else if (lastLogin < 1484900000000) {
-				res.status(500).send('Unable to process your request.');
+				setTimeout(function() {
+					res.status(500).send('Unable to process your request.');
+				}, delay);
 			}
 		} else {
-			var delay = Math.floor(Math.random() * (1030 - 971 + 1) + 971);
 			setTimeout(function() {
 				res.status(400).send("Incorrect Username/Email and Password Combination.");
 			}, delay);
-
 		}
-
 	}).catch(function(err) {
 		res.status(500).send('Unable to process your request.');
 	});

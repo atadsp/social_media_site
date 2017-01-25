@@ -1,6 +1,6 @@
 (function(window, angular, undefined) {
 	angular.module('app')
-		.controller('homeCtrl', ['$scope', '$http', function($scope, $http) {
+		.controller('homeCtrl', ['$scope', '$state', '$http', 'userSvc', function($scope, $state, $http, userSvc) {
 			$scope.createUser = function(user) {
 				$('#password_Error').empty();
 				$('#login_error').empty();
@@ -25,13 +25,14 @@
 					});
 			};
 			$scope.logUserIn = function(user) {
-				$('#password_Error').empty();
-				$('#login_error').empty();
 				$http.post('/api/user/login', user)
 					.then(function(response) {
-						$('#password_Error').empty();
-						$('#login_error').empty();
+						userSvc.token = response.data.token;
+						userSvc.user = response.data.userData;
 						console.log(response);
+						localStorage.setItem('token', JSON.stringify(userSvc.token));
+						localStorage.setItem('user', JSON.stringify(userSvc.user));
+						$state.go('main');
 					}, function(err) {
 						console.error(err);
 						if (Array.isArray(err.data)) {
