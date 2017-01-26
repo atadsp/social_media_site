@@ -26,5 +26,5 @@ router.use(function(req, res, next){
 
 //Post
 router.post('/create_post', function(req,res){
-	var query = "INSERT INTO posts" ttt
+	var query = "INSERT INTO posts"
 });
