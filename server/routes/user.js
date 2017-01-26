@@ -33,7 +33,8 @@ router.get('/get_friends', function(req, res) {
 });
 
 router.get('/get_friend_requests', function(req,res){
-	var query = "SELECT * FROM user_friend_requests WHERE receiver_id =" + req.user_id + " AND status = 'pending'";
+	console.log(req.user_id);
+	var query = "SELECT request.id, request.sender_id, u.username FROM user_friend_requests request INNER JOIN users u ON (u.id = request.sender_id)WHERE request.receiver_id= " + req.user_id + " AND status='pending'";
 	db.query(query).spread(function(result, metadata){
 		res.json({
 			data: result

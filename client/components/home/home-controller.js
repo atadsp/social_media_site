@@ -28,8 +28,8 @@
 				$http.post('/api/user/login', user)
 					.then(function(response) {
 						userSvc.token = response.data.token;
-						userSvc.user = response.data.userData;
-						console.log(response);
+						userSvc.user = response.data.user.username;
+						
 						localStorage.setItem('token', JSON.stringify(userSvc.token));
 						localStorage.setItem('user', JSON.stringify(userSvc.user));
 						$state.go('main');

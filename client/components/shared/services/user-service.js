@@ -7,7 +7,7 @@
 
 			var cachedToken = localStorage.getItem('token');
 			var cachedUser = localStorage.getItem('user');
-
+			
 			if (cachedToken) {
 				vm.token = JSON.parse(cachedToken);
 				vm.user = JSON.parse(cachedUser);

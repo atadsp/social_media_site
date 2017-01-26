@@ -17,7 +17,7 @@ module.exports.createUser = function(req, res) {
 		.spread(function(result, metadata) {
 			console.log(result.length);
 			if (result.length < 1) {
-				if (checker.check(req.body.user_password)) {
+				//if (checker.check(req.body.user_password)) {
 					var password = bcrypt.hashSync(req.body.user_password, salt);
 					var currentDate = Date.now();
 					var query = "INSERT INTO users (username, user_password, email, last_login_attempt, login_attempts) VALUES ('" + req.body.username + "', '" + password + "', '" + req.body.email + "', " + currentDate + ", 0 )";
@@ -28,18 +28,18 @@ module.exports.createUser = function(req, res) {
 						console.log(err);
 						res.status(500).send("User was not created");
 					});
-				} else {
-					checker.check(req.body.user_password);
-					var passError = checker.errors;
-					var errorArry = [];
-					for (var i = 0; i < passError.length; i++) {
-						errorString = passError[i].toString();
-						errorArry.push(errorString);
-					}
-					res.status(500).send(errorArry);
-				}
+				//} else {
+				//	checker.check(req.body.user_password);
+				//	var passError = checker.errors;
+				//	var errorArry = [];
+				//	for (var i = 0; i < passError.length; i++) {
+				//		errorString = passError[i].toString();
+				//		errorArry.push(errorString);
+				//	}
+				//	res.status(500).send(errorArry);
+				//}
 			} else {
-				res.status(500).send('That username or email address is already in use. Try a diffrent one.');
+				res.status(500).send('User was not created');
 			}
 		});
 };
@@ -73,7 +73,7 @@ module.exports.login = function(req, res) {
 						expiresIn: 60 * 60 * 4
 					});
 					res.json({
-						data: userData,
+						user: userData,
 						token: token
 					});
 				} else {
