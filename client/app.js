@@ -2,17 +2,26 @@
     angular.module('app', ['ui.router'])
         .config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
             $stateProvider
-                .state('home', {
-                    url: '/',
-                    templateUrl: '/client/components/home/home.html',
-                    controller: 'homeCtrl'
+                .state('index', {
+                    url: '',
+                    templateUrl: '/client/index.html',
+                    controller: 'indexCtrl',
                 })
-                .state('main', {
-                    url: '/main',
-                    templateUrl: '/client/components/main/main.html',
-                    controller: 'mainCtrl'
+                .state('login', {
+                    url: "/login",
+                    templateUrl: '/client/components/login/login.html',
+                    controller: 'loginCtrl'
+                })
+                .state('new', {
+                    url: '/new',
+                    templateUrl: '/client/components/new/new.html',
+                    controller: 'newCtrl'
+                })
+                .state('feed', {
+                    url: '/feed',
+                    templateUrl: '/client/components/feed/feed.html',
+                    controller: 'feedCtrl'
                 });
-
-            $urlRouterProvider.otherwise('/');
+            $urlRouterProvider.otherwise('/feed');
         }]);
 })(window, window.angular);

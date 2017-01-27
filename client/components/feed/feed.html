@@ -1,0 +1,44 @@
+<div ng-controller="indexCtrl">
+	<div ng-if="isLoggedin()">
+		<div class="row">
+			<div class = "col-lg-6 col-md-6 col-sm-6 col-xs-12" ng-model="userFriends">
+				<h3> User Friends </h3>
+				<ul ng-repeat="friend in userFriends">
+					<li>{{friend.username}}</li>
+				</ul>
+			</div>
+			<div class = "col-lg-6 col-md-6 col-sm-6 col-xs-12" ng-model="user">
+				<h3> Users </h3>
+				<ul ng-repeat="user in users">
+					<li>{{user.username}}	 <button ng-click="addUser(user.id)">Add as Friend </button></li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class = "col-lg-6 col-md-6 col-sm-6 col-xs-12" ng-model="friendRequests">
+				<h3> Friend Requests </h3>
+				<ul ng-repeat="request in friendRequests">
+					<li>{{request.username}} <button ng-click="respondToRequest(request.id, 'confirmed')">&#10004;</button> <button ng-click="respondToRequest(request.id)">&#10008; </button> </li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class = "col-lg-6 col-md-6 col-sm-6 col-xs-12" ng-model="friendRequests">
+				<h3> Update your status </h3>
+				<textarea ng-model="newPost"></textarea> <br/>
+				<button class="cta-button mt10" ng-click="submitPost(newPost)">Submit Post</button> <br/>
+				<h3> See the Latest News </h3>
+				<ul ng-repeat= "post in allPosts">
+					<li>
+						<h4>{{post.user}}</h4>
+						<p> {{post.post_content}} - <strong> {{post.username}} </strong> </p>
+						<span> {{post.date_posted}} </span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div ng-if="!isLoggedin()">
+		<p> It appears you are not logged in please either <a href="#!/login"> sign in </a> or <a href="#!/new"> create an accout </a> </p>
+	</div>
+</div>

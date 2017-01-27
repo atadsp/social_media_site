@@ -8,16 +8,18 @@ process.env.SECRET = "Blue Hyper Giant Media";
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static(__dirname + '/public'));
 app.use('/client', express.static(__dirname + '/client'));
+app.use(express.static(__dirname + '/public'));
 
 //Controllers
 var userController = require('./server/controllers/user_controller');
 
 //Routers
 var secureUserRouter = require('./server/routes/user');
+var securePostRouter = require('./server/routes/post');
 
 app.use('/secure-api/user', secureUserRouter);
+app.use('/secure-api/post', securePostRouter);
 
 //routes
 app.get('/', function(req, res){

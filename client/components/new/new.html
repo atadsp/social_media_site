@@ -1,4 +1,4 @@
-<div>
+<div class="row">
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<form ng-submit="createUser(newUser)">
 			<h3> Enter a Username </h3>
@@ -10,15 +10,5 @@
 			<input type="submit" id="submit" value="Submit">
 		</form> <br>
 		<div id="password_Error" ng-model="userError"> </div>
-	</div>
-	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-		<form ng-submit="logUserIn(existingUser)">
-			<h3> Username or Password </h3>
-			<input type="text" ng-model="existingUser.loginName" maxlength="40" required/>
-			<h3> Enter a password </h3>
-			<input type="password" ng-model="existingUser.password" required/> <br><br>
-			<input type="submit" id="submit" value="Login">
-		</form> <br>
-		<div id="login_error" ng-model="userError"> </div>
 	</div>
 </div>

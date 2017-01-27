@@ -1,38 +1,15 @@
 (function(window, angular, undefined) {
 	angular.module('app')
-		.controller('homeCtrl', ['$scope', '$state', '$http', 'userSvc', function($scope, $state, $http, userSvc) {
-			$scope.createUser = function(user) {
-				$('#password_Error').empty();
-				$('#login_error').empty();
-				$http.post('/api/user/create', user)
-					.then(function(response) {
-						$('#password_Error').empty();
-						$('#login_error').empty();
-						console.log(response);
-					}, function(err) {
-						console.error(err);
-						if (Array.isArray(err.data)) {
-							$('#password_Error').empty();
-							$('#login_error').empty();
-							for (var i = 0; i < err.data.length; i++) {
-								$('#password_Error').append('<p class="alert alert-danger">' + err.data[i] + "<p>");
-							}
-						} else {
-							$('#password_Error').empty();
-							$('#login_error').empty();
-							$('#password_Error').append('<p class="alert alert-danger">' + err.data + "<p>");
-						}
-					});
-			};
+		.controller('loginCtrl', ['$scope', '$state', '$http', 'userSvc', function($scope, $state, $http, userSvc) {
 			$scope.logUserIn = function(user) {
 				$http.post('/api/user/login', user)
 					.then(function(response) {
 						userSvc.token = response.data.token;
 						userSvc.user = response.data.user.username;
-						
+
 						localStorage.setItem('token', JSON.stringify(userSvc.token));
 						localStorage.setItem('user', JSON.stringify(userSvc.user));
-						$state.go('main');
+						$state.go('feed');
 					}, function(err) {
 						console.error(err);
 						if (Array.isArray(err.data)) {

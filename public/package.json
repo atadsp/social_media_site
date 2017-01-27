@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ../server",
+    "start": "node ./server",
+    "postinstall" : "cd ../",
     "postinstall" : "bower install"
   },
   "author": "",
